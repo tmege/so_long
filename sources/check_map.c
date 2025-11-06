@@ -1,20 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   check_map.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acloos <acloos@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/14 17:51:55 by acloos            #+#    #+#             */
-/*   Updated: 2023/03/15 14:19:37 by acloos           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "so_long.h"
 
-/*
-This function records the numbers of special characters: player, items and exits
-If this number is not valid, it displays the appropriate warning
+/*record the numbers of special characters P, C, E
+if the number is not valid, it displays an error msg accordingly
 */
 
 int	check_char(char iji, t_game *game)
@@ -38,16 +25,15 @@ int	check_char(char iji, t_game *game)
 	if (game->map.hero_count > 1 || game->map.exit_count > 1)
 	{
 		if (game->map.hero_count > 1)
-			ft_error(game, "This is not a multi-player game !");
+			ft_error(game, "Too many players on the map.");
 		else if (game->map.exit_count > 1)
-			ft_error(game, "Swiss cheese is not a valid map !");
+			ft_error(game, "Too many exits on the map.");
 		return (0);
 	}
 	return (1);
 }
 /*
-This function goes through the map and verifies every character 
-with check_char()
+goes through the map and verifies every character with check_char()
 */
 
 int	valid_char(t_game *game)
@@ -73,9 +59,9 @@ int	valid_char(t_game *game)
 }
 
 /*
-This function checks whether the map is fully enclosed with walls
-	- checks all of 1st and last line
-	- checks first and last character of all intermediate lines
+check if the map is fully enclosed with walls
+- checks all of 1st and last line
+- checks first and last character of all intermediate lines
 */
 
 int	closed_up(t_game *game)
@@ -103,9 +89,8 @@ int	closed_up(t_game *game)
 }
 
 /*
-This function checks the shape of the map (has to be rectangular)
-It does so by checking that all lines have the same length as the first
-That's why you can't have any empty line
+check that the shape of the map is rectangular
+check that all lines have the same length as the first
 */
 
 int	shape(t_game *game)
@@ -138,14 +123,12 @@ int	check_map(t_game *game)
 {
 	if (!shape(game))
 	{
-		ft_error(game, "Non-euclidian shapes only belong in R'lyeh!\
-			\nPlease provide a rectangular map");
+		ft_error(game, "Please provide a rectangular map.");
 		return (0);
 	}
 	if (!closed_up(game))
 	{
-		ft_error(game, "This map is too windy!\
-			\nPlease provide a closed map");
+		ft_error(game, "Please provide a closed map.");
 		return (0);
 	}
 	if (!valid_char(game))

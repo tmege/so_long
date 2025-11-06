@@ -1,20 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   map_init_bonus.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acloos <acloos@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/14 17:51:26 by acloos            #+#    #+#             */
-/*   Updated: 2023/03/15 13:52:13 by acloos           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "so_long_bonus.h"
 
-/*
-This function records the length and size of the map in the struct
-*/
+/*record the length and size of the map in the struct*/
 
 void	update_size(t_game *game, int i, int j)
 {
@@ -22,9 +8,7 @@ void	update_size(t_game *game, int i, int j)
 	game->map.col_size = j - 1;
 }
 
-/*
-This function finds the length and height of the map
-*/
+/*find the length and height of the map*/
 
 void	get_coord(char *mappy, t_game *game)
 {
@@ -41,22 +25,19 @@ void	get_coord(char *mappy, t_game *game)
 		return ;
 	else
 	{
-		while (mappy != NULL && mapper != NULL)
+		while (mappy != NULL && mapper != NULL && ++j)
 		{
 			mapper = get_next_line(fd);
-			if (!i)
+			if (mapper && !i)
 				i = ft_strlen(mapper);
 			free(mapper);
-			j++;
 		}
 	}
 	update_size(game, i, j);
 	close(fd);
 }
 
-/*
-This function fills the 'map' element of the "map" struct 
-	with the map from the .ber file
+/*fill the 'map' element of the "map" struct with the map from the .ber file
 */
 
 char	**fill_map(char *mappy, t_game *game, char **mapping)
@@ -88,14 +69,12 @@ char	**fill_map(char *mappy, t_game *game, char **mapping)
 	return (mapping);
 }
 
-/*
-This function is a hub to initialize the map
-*/
+/*hub to initialize the map*/
 
 t_game	*map_init(char *mappy, t_game *game)
 {
 	get_coord(mappy, game);
-	if (game->map.line_size > 1 && game->map.col_size > 1)
+	if (game->map.line_size >= 3 && game->map.col_size >= 3)
 	{
 		game->map.map = malloc(sizeof(char) * (game->map.line_size + 1) * \
 			(game->map.col_size + 1) + 1);
@@ -109,7 +88,7 @@ t_game	*map_init(char *mappy, t_game *game)
 	return (game);
 }
 
-/* Fct to print map in shell
+/* print map in shell
 void	archeck(t_game *game)
 {
 	ft_printf("checking array\n");

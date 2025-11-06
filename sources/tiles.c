@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tiles.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acloos <acloos@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/14 17:52:04 by acloos            #+#    #+#             */
-/*   Updated: 2023/03/15 11:23:13 by acloos           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "so_long.h"
 
 void	load_tiles(t_game *game, int x_map, int y_map)
@@ -38,7 +26,7 @@ void	move_counter(t_game *game, int mover)
 {
 	game->player.move_count += mover;
 	if (mover == 1)
-		ft_printf("You have taken %i steps so far\n", game->player.move_count);
+		ft_printf("%i steps.\n", game->player.move_count);
 }
 
 void	update_display(t_game *game, int next_y, int next_x)
@@ -80,8 +68,7 @@ void	load_exit(t_game *game)
 		mlx_put_image_to_window(game->show.mlx_ptr, game->show.win_ptr, \
 			game->exit.img, (game->exit.x_tile) * TILE_SIZE, \
 			(game->exit.y_tile) * TILE_SIZE);
-		ft_printf("\n%s%sSomewhere, a heavy door has opened%s\n\n", \
-			ITALICS, F_D_YELLOW, RST);
+		ft_printf("\nA door has opened.\n\n");
 	}
 }
 

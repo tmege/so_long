@@ -1,28 +1,12 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   so_long_bonus.h                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acloos <acloos@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 18:07:54 by acloos            #+#    #+#             */
-/*   Updated: 2023/03/11 12:28:16 by acloos           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#ifndef SO_LONG_H
+# define SO_LONG_H
 
-#ifndef SO_LONG_BONUS_H
-# define SO_LONG_BONUS_H
-
-# include<sys/types.h>
-# include<sys/stat.h>
-# include<fcntl.h>
-# include<unistd.h>
-# include<stdlib.h>
-# include<string.h>
-# include<errno.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <math.h>
 # include "libft.h"
-# include "ansi_colors_bonus.h"
-# include "linux_keys_bonus.h"
 # include "../mlx/mlx_int.h"
 # include "../mlx/mlx.h"
 
@@ -49,11 +33,6 @@ typedef struct s_tile
 	int				endian;
 }	t_tile;
 
-/*
-inventory: would also work for ennemy 
-	-> when it "walks" over player, player is added to inventory, end of game
-*/
-
 typedef struct s_character
 {
 	int				x_char;
@@ -62,11 +41,6 @@ typedef struct s_character
 	int				move_count;
 	int				inventory;
 }	t_character;
-
-/*
- elder_index: if hero walked next to elders, then items turn into necronomicon
- no, i don't know how to implement it at the moment
-*/
 
 typedef struct s_map
 {
@@ -96,7 +70,6 @@ typedef struct s_show
 	int				y_win;
 }	t_show;
 
-//besoin d'ajouter la mlx ici ?
 typedef struct s_game
 {
 	struct s_character	player;

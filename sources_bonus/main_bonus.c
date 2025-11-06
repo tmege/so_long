@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acloos <acloos@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/14 17:51:31 by acloos            #+#    #+#             */
-/*   Updated: 2023/03/11 12:20:57 by acloos           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "so_long_bonus.h"
 
 int	main(int argc, char **argv)
@@ -19,13 +7,12 @@ int	main(int argc, char **argv)
 	game = malloc(sizeof(t_game));
 	if (!game)
 	{
-		ft_nomap(game, "Malloc error.");
+		ft_nomap(game, "Malloc error.\n");
 		game_under();
 	}
 	if (argc != 2)
 	{
-		ft_nomap(game, "Syntax error detected !\n\
-		Please use as :\n\t\t\t./so_long <map.ber>\n");
+		ft_nomap(game, "Syntax error.\nHTU:\n./so_long <map.ber>\n");
 		game_under();
 		return (2);
 	}

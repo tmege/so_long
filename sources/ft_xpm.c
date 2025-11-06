@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_xpm.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acloos <acloos@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/14 17:51:34 by acloos            #+#    #+#             */
-/*   Updated: 2023/03/10 18:56:27 by acloos           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "so_long.h"
 
 int	xpm_check(t_game *game)
@@ -21,7 +9,7 @@ int	xpm_check(t_game *game)
 		mlx_destroy_window(game->show.mlx_ptr, game->show.win_ptr);
 		mlx_destroy_display(game->show.mlx_ptr);
 		free(game->show.mlx_ptr);
-		ft_error(game, "Could not load xpm files");
+		ft_error(game, "Can't load xpm files.\n");
 		return (0);
 	}
 	return (1);
@@ -61,7 +49,7 @@ t_game	*xpm_load(t_game *game)
 		return (0);
 	if (!xpm_addr(game))
 	{
-		ft_error(game, "Could not find xpm address");
+		ft_error(game, "Can't find xpm address.\n");
 		return (0);
 	}
 	return (game);

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   start_game_bonus.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acloos <acloos@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/03 15:59:52 by acloos            #+#    #+#             */
-/*   Updated: 2023/03/14 09:33:56 by acloos           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "so_long_bonus.h"
 
 void	display_map(t_game *game)
@@ -41,22 +29,21 @@ void	display_game(t_game *game)
 
 int	start_game(t_game *game)
 {
-	ft_printf("\n\tTekeli-li\tTekeli_li !\n\n");
 	game->show.mlx_ptr = mlx_init();
 	if (!game->show.mlx_ptr)
 	{
-		ft_error(game, "Could not start mlx");
+		ft_error(game, "Can't start mlx.\n");
 		return (0);
 	}
 	game->show.x_win = game->map.line_size * TILE_SIZE;
 	game->show.y_win = game->map.col_size * TILE_SIZE;
 	game->show.win_ptr = mlx_new_window(game->show.mlx_ptr, game->show.x_win, \
-		game->show.y_win, "So_long");
+		game->show.y_win, "So_long\n");
 	if (!game->show.win_ptr)
 	{
 		mlx_destroy_display(game->show.mlx_ptr);
 		free(game->show.mlx_ptr);
-		ft_error(game, "Could not open game window");
+		ft_error(game, "Can't open window.\n");
 		return (0);
 	}
 	if (xpm_load(game))

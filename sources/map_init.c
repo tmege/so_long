@@ -1,20 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   map_init.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acloos <acloos@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/14 17:51:26 by acloos            #+#    #+#             */
-/*   Updated: 2023/03/15 14:15:44 by acloos           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "so_long.h"
 
-/*
-This function records the length and size of the map in the struct
-*/
+/*record the length and size of the map in the struct*/
 
 void	update_size(t_game *game, int i, int j)
 {
@@ -22,9 +8,7 @@ void	update_size(t_game *game, int i, int j)
 	game->map.col_size = j - 1;
 }
 
-/*
-This function finds the length and height of the map
-*/
+/*find the length and height of the map*/
 
 void	get_coord(char *mappy, t_game *game)
 {
@@ -53,9 +37,7 @@ void	get_coord(char *mappy, t_game *game)
 	close(fd);
 }
 
-/*
-This function fills the 'map' element of the "map" struct 
-	with the map from the .ber file
+/*fill the 'map' element of the "map" struct with the map from the .ber file
 */
 
 char	**fill_map(char *mappy, t_game *game, char **mapping)
@@ -87,9 +69,7 @@ char	**fill_map(char *mappy, t_game *game, char **mapping)
 	return (mapping);
 }
 
-/*
-This function is a hub to initialize the map
-*/
+/*hub to initialize the map*/
 
 t_game	*map_init(char *mappy, t_game *game)
 {
@@ -108,7 +88,7 @@ t_game	*map_init(char *mappy, t_game *game)
 	return (game);
 }
 
-/* Fct to print map in shell
+/* print map in shell
 void	archeck(t_game *game)
 {
 	ft_printf("checking array\n");

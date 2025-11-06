@@ -1,20 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   elem_pos.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acloos <acloos@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/14 17:51:38 by acloos            #+#    #+#             */
-/*   Updated: 2023/03/09 18:36:10 by acloos           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "so_long.h"
 
-/*The following function initialize values of struct:
-	- s_character : player
-	- s_tile : exit position
+/*initialize values of struct:
+- s_character : player
+- s_tile : exit position
 */
 
 void	player_pos(int i, int j, t_game *game)
@@ -29,10 +17,7 @@ void	exit_pos(int i, int j, t_game *game)
 	game->exit.y_tile = i;
 }
 
-/*
-This function runs through the map, in order to 
-identify the X/Y position of character and exit
-Should I do that for items as well? (apparently not)
+/*run through the map & identify the x/y position of character and exit
 */
 
 t_game	*elem_pos(t_game *game)
@@ -57,26 +42,25 @@ t_game	*elem_pos(t_game *game)
 	return (game);
 }
 
-/*
-This function displays a message if there is no P or E or C
-If several are missing, the 1st message only is displayed
+/*display a message if there is no P or E or C
+if several are missing, the 1st message only is displayed
 */
 
 int	mission_ready(t_game *game)
 {
 	if (game->map.hero_count == 0)
 	{
-		ft_error(game, "Can't start mission!\n\tNobody volunteered");
+		ft_error(game, "No hero :( ");
 		return (0);
 	}
 	if (game->map.exit_count == 0)
 	{
-		ft_error(game, "Can't start mission!\n\tThere's no way out");
+		ft_error(game, "No way out ;( ");
 		return (0);
 	}
 	if (game->map.item_count == 0)
 	{
-		ft_error(game, "Can't start mission!\n\tNo quest available");
+		ft_error(game, "No items :( ");
 		return (0);
 	}
 	game = elem_pos(game);

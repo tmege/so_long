@@ -1,21 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   mlx_closing.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acloos <acloos@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/14 17:51:08 by acloos            #+#    #+#             */
-/*   Updated: 2023/03/10 20:03:43 by acloos           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "so_long.h"
 
-/*
-This function frees the map, line by line
-*/
-
+/*frees the map, line by line*/
 void	map_destroyer(t_game *game)
 {
 	int	i;

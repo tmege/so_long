@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tiles_bonus.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acloos <acloos@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/14 17:52:04 by acloos            #+#    #+#             */
-/*   Updated: 2023/03/14 14:34:04 by acloos           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "so_long_bonus.h"
 
 void	load_tiles(t_game *game, int x_map, int y_map)
@@ -21,8 +9,11 @@ void	load_tiles(t_game *game, int x_map, int y_map)
 		mlx_put_image_to_window(game->show.mlx_ptr, game->show.win_ptr, \
 			game->floor.img, x_map * TILE_SIZE, y_map * TILE_SIZE);
 	else if (game->map.map[y_map][x_map] == 'P')
+	{
 		mlx_put_image_to_window(game->show.mlx_ptr, game->show.win_ptr, \
 			game->hero.img, x_map * TILE_SIZE, y_map * TILE_SIZE);
+		game->map.map[y_map][x_map] = '0';
+	}
 	else if (game->map.map[y_map][x_map] == 'E')
 		mlx_put_image_to_window(game->show.mlx_ptr, game->show.win_ptr, \
 			game->exit.img, x_map * TILE_SIZE, y_map * TILE_SIZE);
@@ -43,7 +34,7 @@ void	move_counter(t_game *game, int mover)
 	{
 		mlx_put_image_to_window(game->show.mlx_ptr, game->show.win_ptr, \
 			game->wall.img, 1 * TILE_SIZE, 0 * TILE_SIZE);
-		ft_printf("You have taken %i steps so far\n", game->player.move_count);
+		ft_printf("%i steps.\n", game->player.move_count);
 		mlx_string_put(game->show.mlx_ptr, game->show.win_ptr, \
 			67, 11, 0xFFFF00, "Moves :");
 		mlx_string_put(game->show.mlx_ptr, game->show.win_ptr, \
@@ -59,9 +50,12 @@ void	update_display(t_game *game, int next_y, int next_x)
 		(game->player.y_char + next_y) * TILE_SIZE);
 	if (game->map.map[game->player.y_char][game->player.x_char] == 'E'
 		&& game->player.inventory != game->map.item_count)
+	{
 		mlx_put_image_to_window(game->show.mlx_ptr, game->show.win_ptr, \
-			game->exit.img, (game->player.x_char) * TILE_SIZE, \
-			(game->player.y_char) * TILE_SIZE);
+		game->exit.img, (game->player.x_char) * TILE_SIZE, \
+		(game->player.y_char) * TILE_SIZE);
+		game->map.map[game->player.y_char][game->player.x_char] = 'E';
+	}
 	else
 	{
 		mlx_put_image_to_window(game->show.mlx_ptr, game->show.win_ptr, \
@@ -76,18 +70,20 @@ void	update_display(t_game *game, int next_y, int next_x)
 
 void	load_exit(t_game *game)
 {
-	mlx_destroy_image(game->show.mlx_ptr, game->exit.img);
-	game->exit.img = mlx_xpm_file_to_image(game->show.mlx_ptr, \
-		"assets/E_exit_open.xpm", &game->exit.bits_per_pixel, \
-		&game->exit.size_line);
-	game->exit.addr = mlx_get_data_addr(game->exit.img, \
-		&game->exit.bits_per_pixel, &game->exit.size_line, \
-		&game->exit.endian);
-	mlx_put_image_to_window(game->show.mlx_ptr, game->show.win_ptr, \
-		game->exit.img, (game->exit.x_tile) * TILE_SIZE, \
-		(game->exit.y_tile) * TILE_SIZE);
-	ft_printf("\n%s%sSomewhere, a heavy door has opened%s\n\n", \
-		ITALICS, F_D_YELLOW, RST);
+	if (game->player.inventory == game->map.item_count)
+	{
+		mlx_destroy_image(game->show.mlx_ptr, game->exit.img);
+		game->exit.img = mlx_xpm_file_to_image(game->show.mlx_ptr, \
+			"assets/E_exit_open.xpm", &game->exit.bits_per_pixel, \
+			&game->exit.size_line);
+		game->exit.addr = mlx_get_data_addr(game->exit.img, \
+			&game->exit.bits_per_pixel, &game->exit.size_line, \
+			&game->exit.endian);
+		mlx_put_image_to_window(game->show.mlx_ptr, game->show.win_ptr, \
+			game->exit.img, (game->exit.x_tile) * TILE_SIZE, \
+			(game->exit.y_tile) * TILE_SIZE);
+		ft_printf("\nA door has opened.\n\n");
+	}
 }
 
 void	check_next_tile(t_game *game, int tile_code, char mod)
