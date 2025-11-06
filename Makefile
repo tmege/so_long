@@ -1,79 +1,80 @@
-NAME = so_long
-NAME_BONUS = so_long_bonus
+NAME        = so_long
+NAME_BONUS  = so_long_bonus
+CC          = cc
+CFLAGS      = -Wall -Wextra -Werror -g3 -MMD
+RM          = rm -rf
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 -MMD
-RM = rm -rf
+SRC_DIR     = sources
+BONUS_DIR   = sources_bonus
+OBJ_DIR     = obj
+OBJ_BONUS_DIR = objbonus
+INCL_DIR    = includes
+INCL_BONUS_DIR = includes_bonus
 
-SRCBAZ = main error struct_init struct_tiles_init \
+LIBFT_DIR   = libft
+LIBFT       = $(LIBFT_DIR)/libft.a
+LIBINCL     = -L $(LIBFT_DIR) -lft
+
+MLX_DIR     = mlx
+MLXFLAGS    = -L $(MLX_DIR) -lmlx -lXext -lX11 -lm
+
+SRC_NAMES = main error struct_init struct_tiles_init \
 	parsing map_init check_map flood_fill elem_pos \
 	start_game ft_xpm events_hook tiles move mlx_closing game_end
 
-SRC = $(addsuffix .c, $(addprefix sources/, $(SRCBAZ)))
-SRCADD = $(SRCBAZ)
-SRCBONUS = $(addsuffix _bonus.c, $(addprefix sources_bonus/, $(SRCADD)))
+SRC         = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_NAMES)))
+SRC_BONUS   = $(addprefix $(BONUS_DIR)/, $(addsuffix _bonus.c, $(SRC_NAMES)))
 
-OBJ_DIR = obj
-OBJ = $(SRC:sources/%.c=$(OBJ_DIR)/%.o)
-OBJ_BONUS_DIR = objbonus
-OBJ_BONUS = $(SRCBONUS:sources_bonus/%.c=$(OBJ_BONUS_DIR)/%.o)
+OBJ         = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJ_BONUS   = $(SRC_BONUS:$(BONUS_DIR)/%.c=$(OBJ_BONUS_DIR)/%.o)
+DEPS        = $(OBJ:.o=.d)
 
-INCLS = -I ./includes/
-INCLS_BONUS = -I ./includes_bonus/
+# ========================
+#        RULES
+# ========================
 
-LIBFT_PATH = ./libft
-LIBFT = $(LIBFT_PATH)/libft.a
-LIBINCL = -L libft/ -lft
-
-MLX_PATH = ./mlx
-MLX = $(MLX_PATH)/libmlx_Linux.a
-MLXFLAGS = -L mlx/ -lmlx -lXext -lX11 -lm
-
-DEPS = $(OBJ:%.o=%.d)
-
-# --- Compilation des fichiers sources ---
-$(OBJ_DIR)/%.o: sources/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INCLS) -I libft/sources -I mlx -c $< -o $@
-
-$(OBJ_BONUS_DIR)/%.o: sources_bonus/%.c | $(OBJ_BONUS_DIR)
-	$(CC) $(CFLAGS) $(INCLS_BONUS) -I libft/sources -I mlx -c $< -o $@
-
-# --- Règles principales ---
 all: $(NAME)
-
-$(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBINCL) $(MLXFLAGS)
-	@echo "✅ so_long created"
-
-$(NAME_BONUS): $(LIBFT) $(OBJ_BONUS)
-	$(CC) $(CFLAGS) $(OBJ_BONUS) -o $(NAME_BONUS) $(LIBINCL) $(MLXFLAGS)
-	@echo "✅ so_long_bonus created"
-
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_PATH) all -s
-	@echo "📦 Libft ready"
-
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-
-$(OBJ_BONUS_DIR):
-	mkdir -p $(OBJ_BONUS_DIR)
 
 bonus: $(NAME_BONUS)
 
+$(NAME): $(LIBFT) $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $@ $(LIBINCL) $(MLXFLAGS)
+	@echo "✅ $@ ready"
+
+$(NAME_BONUS): $(LIBFT) $(OBJ_BONUS)
+	$(CC) $(CFLAGS) $(OBJ_BONUS) -o $@ $(LIBINCL) $(MLXFLAGS)
+	@echo "✅ $@ ready"
+
+# === Compilation ===
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I $(INCL_DIR) -I $(LIBFT_DIR)/sources -I $(MLX_DIR) -c $< -o $@
+
+$(OBJ_BONUS_DIR)/%.o: $(BONUS_DIR)/%.c | $(OBJ_BONUS_DIR)
+	$(CC) $(CFLAGS) -I $(INCL_BONUS_DIR) -I $(LIBFT_DIR)/sources -I $(MLX_DIR) -c $< -o $@
+
+# === Dossiers objets ===
+$(OBJ_DIR) $(OBJ_BONUS_DIR):
+	mkdir -p $@
+
+# === Libft ===
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_DIR) all -s
+	@echo "📦 Libft ready"
+
+# === Nettoyage ===
 clean:
-	$(MAKE) -C $(LIBFT_PATH) clean
-	$(RM) $(OBJ_DIR) $(OBJ_BONUS_DIR)
-	@echo "🧹 Cleaned up"
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(RM) $(OBJ_DIR) $(OBJ_BONUS_DIR)
+	@echo "🧹 Cleaned"
 
 fclean: clean
-	$(MAKE) -C $(LIBFT_PATH) fclean
-	$(RM) $(NAME) $(NAME_BONUS)
-	@echo "🔥 Fully cleaned up"
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(RM) $(NAME) $(NAME_BONUS)
+	@echo "🔥 Fully cleaned"
 
 re: fclean all
 
 -include $(DEPS)
 
-.PHONY: all clean fclean re bonus libft
+.PHONY: all bonus clean fclean re
 
