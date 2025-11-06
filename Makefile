@@ -15,7 +15,8 @@ LIBFT_DIR   = libft
 LIBFT       = $(LIBFT_DIR)/libft.a
 LIBINCL     = -L $(LIBFT_DIR) -lft
 
-MLX_DIR     = mlx
+MLX_DIR     = minilibx-linux
+MLX         = $(MLX_DIR)/libmlx.a
 MLXFLAGS    = -L $(MLX_DIR) -lmlx -lXext -lX11 -lm
 
 SRC_NAMES = main error struct_init struct_tiles_init \
@@ -33,15 +34,16 @@ DEPS        = $(OBJ:.o=.d)
 #        RULES
 # ========================
 
-all: $(NAME)
+all: $(MLX) $(LIBFT) $(NAME)
 
-bonus: $(NAME_BONUS)
+bonus: $(MLX) $(LIBFT) $(NAME_BONUS)
 
-$(NAME): $(LIBFT) $(OBJ)
+# === Executables ===
+$(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $@ $(LIBINCL) $(MLXFLAGS)
 	@echo "✅ $@ ready"
 
-$(NAME_BONUS): $(LIBFT) $(OBJ_BONUS)
+$(NAME_BONUS): $(OBJ_BONUS)
 	$(CC) $(CFLAGS) $(OBJ_BONUS) -o $@ $(LIBINCL) $(MLXFLAGS)
 	@echo "✅ $@ ready"
 
@@ -52,14 +54,18 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 $(OBJ_BONUS_DIR)/%.o: $(BONUS_DIR)/%.c | $(OBJ_BONUS_DIR)
 	$(CC) $(CFLAGS) -I $(INCL_BONUS_DIR) -I $(LIBFT_DIR)/sources -I $(MLX_DIR) -c $< -o $@
 
-# === Dossiers objets ===
+# === Répertoires d’objets ===
 $(OBJ_DIR) $(OBJ_BONUS_DIR):
 	mkdir -p $@
 
-# === Libft ===
+# === Librairies externes ===
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) all -s
 	@echo "📦 Libft ready"
+
+$(MLX):
+	@$(MAKE) -C $(MLX_DIR) all > /dev/null 2>&1
+	@echo "🪟 MinilibX ready"
 
 # === Nettoyage ===
 clean:
@@ -69,6 +75,7 @@ clean:
 
 fclean: clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(MLX_DIR) clean
 	@$(RM) $(NAME) $(NAME_BONUS)
 	@echo "🔥 Fully cleaned"
 

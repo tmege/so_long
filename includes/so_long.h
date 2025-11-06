@@ -6,9 +6,9 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
-# include "libft.h"
-# include "../mlx/mlx_int.h"
-# include "../mlx/mlx.h"
+# include "../libft/includes/libft.h"
+# include "../minilibx-linux/mlx_int.h"
+# include "../minilibx-linux/mlx.h"
 
 # ifndef WIN_HEIGHT
 #  define WIN_HEIGHT 480
