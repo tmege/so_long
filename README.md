@@ -79,7 +79,3 @@ make re       # Full rebuild
 - **MiniLibX** — included in `minilibx-linux/`, requires `libXext` and `libX11`
 - **Libft** — custom C library included in `libft/`
 
-## Notes
-
-- Touching the `Makefile` triggers a full recompilation of all source files.
-- The project compiles with `-Wall -Wextra -Werror`.
