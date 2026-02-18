@@ -57,9 +57,7 @@ LIBFT_SRCS = \
 	$(SRC_DIR)/ft_putchar_fd.c \
 	$(SRC_DIR)/ft_putstr_fd.c \
 	$(SRC_DIR)/ft_putendl_fd.c \
-	$(SRC_DIR)/ft_putnbr_fd.c \
-	$(SRC_DIR)/get_next_line_bonus.c \
-	$(SRC_DIR)/get_next_line_utils_bonus.c \
+	$(SRC_DIR)/ft_putnbr_fd.c
 
 # Sources bonus (dans srcs/)
 BONUS_SRCS = \

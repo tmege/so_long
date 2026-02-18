@@ -13,28 +13,16 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
-
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include "ft_printf.h"
-
 
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }	t_list;
-
-typedef struct s_fdnode
-{
-	int					fd;
-	char				*stash;
-	struct s_fdnode		*next;
-}	t_fdnode;
 
 int		ft_isalpha(int c);
 int		ft_isascii(int n);
@@ -80,14 +68,5 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_printf(const char *format, ...);
-char		*get_next_line(int fd);
-char    *ft_strjoin_gnl(char *s1, char *s2);
-char	*ft_strchr_gnl(const char *s, int c);
-size_t	ft_strlen_gnl(const char *s);
-t_fdnode	*get_fdnode(t_fdnode **head, int fd);
-void		free_fdnode(t_fdnode **head, int fd);
-char		*get_line(char *buffer);
-char		*save_rest(char *buffer);
-int			read_and_stash(t_fdnode *curr, int fd);
 
 #endif
